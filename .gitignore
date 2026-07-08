@@ -1,3 +1,27 @@
 node_modules/
 .DS_Store
 *.log
+.env
+.env.*
+!.env.example
+
+# Release artifacts
+dist/
+*.zip
+*.crx
+*.xpi
+*.pem
+web-ext-artifacts/
+
+# Icons
+icons/*
+!icons/icon-16.png
+!icons/icon-32.png
+!icons/icon-48.png
+!icons/icon-128.png
+
+# Local agent/editor state
+.agents/
+.codex/
+.idea/
+.vscode/
