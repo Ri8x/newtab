@@ -16,17 +16,34 @@ document.addEventListener('DOMContentLoaded', () => {
         day: 'numeric',
     });
 
+    let lastTime = '';
+    let lastDate = '';
+
     function updateClock() {
         const now = new Date();
-        timeElement.textContent = timeFormatter.format(now);
-        dateElement.textContent = dateFormatter.format(now);
-        clockElement.dateTime = now.toISOString();
+        const time = timeFormatter.format(now);
+        const date = dateFormatter.format(now);
+        let changed = false;
+
+        if (time !== lastTime) {
+            timeElement.textContent = time;
+            lastTime = time;
+            changed = true;
+        }
+
+        if (date !== lastDate) {
+            dateElement.textContent = date;
+            lastDate = date;
+            changed = true;
+        }
+
+        if (changed) {
+            clockElement.dateTime = now.toISOString();
+        }
     }
 
     updateClock();
-
-    window.setTimeout(() => {
-        updateClock();
-        window.setInterval(updateClock, 60000);
-    }, 60000 - (Date.now() % 60000));
+    window.setInterval(updateClock, 1000);
+    document.addEventListener('visibilitychange', updateClock);
+    window.addEventListener('focus', updateClock);
 });
